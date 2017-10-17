@@ -46,8 +46,8 @@ app.get('/ab(cd)?e', function(req, res) {
 });
 
 //Esta vía de acceso de ruta coincidirá con cualquier valor con una “a” en el nombre de la ruta.
-app.get(/a/, function(req, res) {
-  res.send('/a/');
+app.get(/g/, function(req, res) {
+  res.send('/g/');
 });
 
 //Esta vía de acceso de ruta coincidirá con butterfly y dragonfly, pero no con butterflyman, dragonfly man, etc.
@@ -56,28 +56,31 @@ app.get(/.*fly$/, function(req, res) {
 });
 
 //Más de una función de devolución de llamada puede manejar una ruta (asegúrese de especificar el objeto next).
-app.get('/example/b', function (req, res, next) {
-  console.log('the response will be sent by the next function ...');
-  next();
-}, function (req, res) {
-  res.send('Hello from B!');
-});
+app.get('/example/b',
+    function (req, res, next) {
+      console.log('the response will be sent by the next function ...');
+      next();
+    },
+    function (req, res) {
+    res.send('Hello from B!');
+  }
+);
 
 //Una matriz de funciones de devolución de llamada puede manejar una ruta.
 
 var cb0 = function (req, res, next) {
   console.log('CB0');
   next();
-}
+};
 
 var cb1 = function (req, res, next) {
   console.log('CB1');
   next();
-}
+};
 
 var cb2 = function (req, res) {
   res.send('Hello from C!');
-}
+};
 
 app.get('/example/c', [cb0, cb1, cb2]);
 
@@ -109,13 +112,20 @@ app.route('/book')
   .put(function(req, res) {
     res.send('Update the book');
   });
-
+//parámetro por URL
+app.get('/:id', function(req, res){
+    res.send('The id you specified is ' + req.params.id);
+});
+//parámetros por URL
+app.get('/thins/:name/:id', function(req, res) {
+    res.send('id: ' + req.params.id + ' and name: ' + req.params.name);
+});
 //parámetros por URL
 app.get('/users/:userId/books/:bookId', function (req, res) {
   // Access userId via: req.params.userId
   // Access bookId via: req.params.bookId
   res.send(req.params)
-})
+});
 
 
 //Utilice la clase express.Router para crear manejadores de rutas montables y modulares.
