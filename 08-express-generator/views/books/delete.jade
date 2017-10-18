@@ -1,4 +1,7 @@
-p Desea borrar los datos del id #{id}?
-a(href="/books/delete/confirm/"+id) Borrar definitivamente
-br
-a(href="/books/") Volver al Listado
+extends ../layout
+
+block content
+    p Desea borrar los datos del id #{id}?
+    a(href="/books/delete/confirm/"+id) Borrar definitivamente
+    br
+    a(href="/books/") Volver al Listado
