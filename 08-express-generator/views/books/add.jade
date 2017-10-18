@@ -1,0 +1,19 @@
+form(action="", method="post", enctype="multipart/form-data")
+    fieldset
+        input(type="hidden", id="id", name="id", placeholder="Enter ID"  value=(undefined === objeto ? '' : objeto.id))
+        br
+        label(for="isbn") ISBN
+        input(type="text", id="isbn", name="isbn", placeholder="Enter ISBN" value=(undefined===objeto ? '' : objeto.isbn))
+        br
+        label(for="titulo") Título
+        input(type="text", id="titulo", name="titulo", placeholder="Enter Title" value=(undefined===objeto ? '' : objeto.titulo))
+        br
+        label(for="autores") Autores
+        input(type="text", id="autores", name="autores", placeholder="Enter Authors" value=(undefined===objeto ? '' : objeto.autores))
+        br
+        label(for="sinopsis") Sinopsis
+        textarea(id="sinopsis", name="sinopsis", placeholder="Enter sinopsis")
+            if undefined!=objeto
+                | #{objeto.sinopsis}
+        br
+        input(type="submit", value="Enviar")

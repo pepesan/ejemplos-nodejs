@@ -1,0 +1,12 @@
+h1= variable
+a(href="/books/add") Añadir Libro
+table.listado
+    each item in listado
+        tr(style="border: black 1px solid;")
+            td=item.titulo
+            td
+                a(id="show-"+item.id,href="/books/"+item.id) Show
+            td
+                a(id="edit-"+item.id,href="/books/edit/" + item.id) Edit
+            td
+                a(id="delete-"+item.id,href="/books/delete/" + item.id) Delete
