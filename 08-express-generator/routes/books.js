@@ -7,48 +7,15 @@ router.get('/', bookController.list);
 /* GET users add form. */
 router.get('/add', bookController.form);
 /* POST users add form. */
-router.post('/add', function(req, res, next) {
-    var form = new formidable.IncomingForm();
-    form.parse(req, function(err, fields, files) {
-        //console.log(fields);
-        //console.log(fields.id);
-        res.render('books/show', { objeto: fields });
-    });
-});
+router.post('/add', bookController.saveForm);
 /* GET users edit form. */
-router.get('/edit/:id', function(req, res, next) {
-    var id=req.params.id;
-    console.log(id);
-    var objeto={
-        id:id,
-        isbn:"2131231",
-        titulo:"Harry potter y la piedra filosofal",
-        autores:"J.K. Rowling",
-        sinopsis:"libro gueno gueno de magos y malotes"
-    };
-    res.render('books/add', { objeto: objeto });
-});
+router.get('/edit/:id',bookController.showEditForm);
 /* POST users edit form. */
-router.post('/edit/:id', function(req, res, next) {
-    var form = new formidable.IncomingForm();
-    form.parse(req, function(err, fields, files) {
-        //console.log(fields);
-        //fields.id=0;
-        //console.log(fields.id);
-        res.render('books/show', { objeto: fields });
-    });
-});
+router.post('/edit/:id', bookController.processEditForm);
 /* GET users listing. */
-router.get('/delete/:id', function(req, res, next) {
-    var id=req.params.id;
-    res.render('books/delete', { id: id });
-});
+router.get('/delete/:id', bookController.deleteBook);
 /* GET users listing. */
-router.get('/delete/confirm/:id', function(req, res, next) {
-    var id=req.params.id;
-    res.render('books/delete-confirmed', { id: id });
-
-});
+router.get('/delete/confirm/:id', bookController.confirmDelete);
 /* GET users listing. */
 router.get('/save',bookController.save );
 

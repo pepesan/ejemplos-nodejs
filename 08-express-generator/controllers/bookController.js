@@ -1,4 +1,5 @@
 var Book = require('../models/book');
+var formidable = require('formidable');
 
 var list =function(req, res, next) {
     /*
@@ -38,7 +39,7 @@ var list =function(req, res, next) {
 };
 
 var form=function(req, res, next) {
-    var objeto={id:1,isbn:"",titulo:"",autores:"",sinopsis:""};
+    var objeto={isbn:"",title:"",author:"",summary:""};
     res.render('books/add', { objeto: objeto });
 };
 
@@ -80,11 +81,82 @@ var show=function (req, res, next) {
         });
 
 };
+
+
+var saveForm=function (req, res, next) {
+        var form = new formidable.IncomingForm();
+        form.parse(req, function(err, fields, files) {
+            console.log(fields);
+            //console.log(fields.id);
+            delete fields._id;
+            var libro=new Book(fields);
+            libro.save(function (err) {
+                if (err) { return next(err); }
+                //Genre saved. Redirect to genre detail page
+                //res.redirect(genre.url);
+                console.log(libro);
+                res.redirect("/books/"+libro._id);
+            });
+            //res.render('books/show', { objeto: fields });
+        });
+};
+var showEditForm= function(req, res, next) {
+    var id=req.params.id;
+    Book.findById(id)
+        .exec(function (err, book) {
+            if (err) { return next(err); }
+            //Successful, so render
+            res.render('books/add', { objeto: book });
+        });
+
+};
+var processEditForm=function(req, res, next) {
+    var form = new formidable.IncomingForm();
+    form.parse(req, function(err, fields, files) {
+        //console.log(fields);
+        //fields.id=0;
+        //console.log(fields.id);
+        var libro=new Book(fields);
+        Book.findByIdAndUpdate(libro._id,{$set:libro},
+            function(err, result){
+            if (err) { return next(err); }
+            //Genre saved. Redirect to genre detail page
+            //res.redirect(genre.url);
+            console.log(libro);
+            res.redirect("/books/"+libro._id);
+        });
+        //res.render('books/show', { objeto: fields });
+    });
+};
+var deleteBook=function(req, res, next) {
+    var id=req.params.id;
+    res.render('books/delete', { id: id });
+
+};
+var confirmDelete=function(req, res, next) {
+
+    var id=req.params.id;
+    Book.findByIdAndRemove(id,
+        function(err, result){
+            if (err) { return next(err); }
+            //Genre saved. Redirect to genre detail page
+            //res.redirect(genre.url);
+            console.log(result);
+            //res.render('books/delete', { id: id });
+            res.redirect("/books/");
+        });
+
+};
 var app={
     list:list,
     form:form,
     save:save,
-    show:show
+    show:show,
+    saveForm:saveForm,
+    showEditForm:showEditForm,
+    processEditForm:processEditForm,
+    deleteBook:deleteBook,
+    confirmDelete:confirmDelete
 };
 
 module.exports=app;

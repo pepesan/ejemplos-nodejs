@@ -3,16 +3,16 @@ extends ../layout
 block content
     form(action="", method="post", enctype="multipart/form-data")
         fieldset
-            input(type="hidden", id="id", name="id", placeholder="Enter ID"  value=(undefined === objeto ? '' : objeto.id))
+            input(type="hidden", id="id", name="_id", placeholder="Enter ID"  value=(undefined === objeto ? '' : objeto._id))
             br
             label(for="isbn") ISBN
             input(type="text", id="isbn", name="isbn", placeholder="Enter ISBN" value=(undefined===objeto ? '' : objeto.isbn))
             br
             label(for="titulo") Título
-            input(type="text", id="titulo", name="title", placeholder="Enter Title" value=(undefined===objeto ? '' : objeto.titulo))
+            input(type="text", id="titulo", name="title", placeholder="Enter Title" value=(undefined===objeto ? '' : objeto.title))
             br
             label(for="autores") Autores
-            input(type="text", id="autores", name="author", placeholder="Enter Authors" value=(undefined===objeto ? '' : objeto.autores))
+            input(type="text", id="autores", name="author", placeholder="Enter Authors" value=(undefined===objeto ? '' : objeto.author))
             br
             label(for="sinopsis") Sinopsis
             textarea(id="sinopsis", name="summary", placeholder="Enter sinopsis")
