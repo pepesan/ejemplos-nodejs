@@ -5,13 +5,15 @@ block content
     a(href="/books/add") Añadir Libro
     table.listado
         tr
+            th _ID
             th Título
             th Autores
             th Operaciones
         each item in listado
             tr(style="border: black 1px solid;")
-                td=item.titulo
-                td=item.autores
+                td=item._id
+                td=item.title
+                td=item.author
                 td
                     a(id="show-"+item.id,href="/books/"+item.id) Show
 

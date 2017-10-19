@@ -49,17 +49,11 @@ router.get('/delete/confirm/:id', function(req, res, next) {
     res.render('books/delete-confirmed', { id: id });
 
 });
+/* GET users listing. */
+router.get('/save',bookController.save );
+
 
 /* GET users listing. */
-router.get('/:id', function(req, res, next) {
-    var objeto={
-        id:1,
-        isbn:"2131231",
-        titulo:"Harry potter y la piedra filosofal",
-        autores:"J.K. Rowling",
-        sinopsis:"liobro gueno gueno de magos y malotes"
-    };
-    res.render('books/show', { objeto: objeto });
-});
+router.get('/:id', bookController.show);
 
 module.exports = router;

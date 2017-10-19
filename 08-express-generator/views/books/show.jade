@@ -3,12 +3,12 @@ extends ../layout
 block content
     a(href="/books/") Volver al Listado
     .mostrar
-        label="ID: "+objeto.id
+        label="ID: "+objeto._id
         br
         label="ISBN: " + objeto.isbn
         br
-        label="Título: " + objeto.titulo
+        label="Título: " + objeto.title
         br
-        label="Autores: " + objeto.autores
+        label="Autores: " + objeto.author
         br
-        label="Sinopsis: " + objeto.sinopsis
+        label="Sinopsis: " + objeto.summary

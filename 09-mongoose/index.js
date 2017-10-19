@@ -1,13 +1,13 @@
 var express = require('express');
-      var http = require('http');
-      var path = require('path');
-      var app = express();
-      var fs = require('fs') ;
+var http = require('http');
+//var path = require('path');
+var app = express();
+//var fs = require('fs') ;
 var User = require('./models/user') ;
 
 // database connection
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:32768/test');
+mongoose.connect('mongodb://localhost:27017/test');
 
 // some environment variables
 app.set('port', process.env.PORT || 3000);
@@ -70,7 +70,7 @@ app.post("/",function(req,res){
 
       console.log('User saved successfully!');
     });
-    res.end();
+    res.end(usuario.toString());
 });
 app.get("/:id",function(req,res){
     var id=req.params.id;
