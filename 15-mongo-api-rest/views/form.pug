@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  ul
+    li
+        a(href="list") Listado
+    li
+        a(href="getAll") getAll
+    li
+        a(href="addForm") addForm
+    li
+        a(href="add") add
+    li
+        a(href="addStatic") addStatic
+    li
+        a(href="get/1") get
+  div 
+    form(method="get",action="",id="formu")
+        div
+            label(for="nombre") nombre
+            input(id="nombre",name="nombre",type="text",value="")
+        div
+            label(for="pass") password
+            input(id="pass",name="pass",type="password",value="")
+        div 
+            input(type="submit",value="Enviar")

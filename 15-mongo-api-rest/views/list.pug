@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  h2 Listado
+  p Welcome to #{title}
+  script(src='/javascripts/listado.js')
+  ul
+    li
+        a(href="/api/list") Listado
+    li
+        a(href="/api/getAll") getAll
+    li
+        a(href="/api/addForm") addForm
+    li
+        a(href="/api/add") add
+    li
+        a(href="/api//api/addStatic") addStatic
+    li
+        a(href="/api/get/1") get
+  ul(id="listado") 
+    
