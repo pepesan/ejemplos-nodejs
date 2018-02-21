@@ -46,5 +46,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+console.log("Abre http://localhost:3000/ para empezar");
 module.exports = app;
