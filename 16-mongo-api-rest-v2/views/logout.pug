@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    include includes/menu.pug
+    if(session.usuario)
+        h1 Usuario logueado
+    else
+        h1 Usuario no Logueado

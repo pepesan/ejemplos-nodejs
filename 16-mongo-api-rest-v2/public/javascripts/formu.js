@@ -34,10 +34,48 @@ function editado(event){
         console.log("petición fallida");
     });
 }
+function checkSamePassword() {
+  var pass2 = document.getElementById("pass2");
+  var pass = document.getElementById("pass");
+
+  // Si hay (por lo menos) un archivo seleccionado
+  if (pass.value!=pass2.value) {
+       pass2.setCustomValidity("Las contraseñas deben coincidir");
+       return;
+  }
+  // No hay incumplimiento de la restricción
+  pass2.setCustomValidity("");
+}
+
+function registrar(event){
+    event.preventDefault();
+    var objeto={    
+    };
+    objeto.nombre=$("#nombre").val();
+    objeto.pass=$("#pass").val();
+    $.post("/api/register",objeto,recoger)
+        .fail(function(){
+        console.log("petición fallida");
+    })
+}
+function loguear(event){
+    event.preventDefault();
+    var objeto={    
+    };
+    objeto.nombre=$("#nombre").val();
+    objeto.pass=$("#pass").val();
+    $.post("/api/login",objeto,recoger)
+        .fail(function(){
+        console.log("petición fallida");
+    })
+}
 function init(){
     console.log("DOM Cargado");
     $("#formu").submit(enviado);
     $("#formu-edit").submit(editado);
+    $("#register #pass2").change(checkSamePassword);
+    $("#register").submit(registrar);
+    $("#login").submit(loguear);
     var forms = document.getElementsByClassName('needs-validation');
     // Loop over them and prevent submission
     var validation = Array.prototype.filter.call(forms, function(form) {

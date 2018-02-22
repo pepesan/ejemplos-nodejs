@@ -12,6 +12,10 @@ db.once('open', function () {
 
 });
 
+
+function cogeLogin(session){
+    return session.usuario;
+}
 /* GET home page. */
 router.get('/', function (req, res, next) {
     res.render('api', {
@@ -36,8 +40,12 @@ router.get('/getAll', function (req, res, next) {
 });
 router.get('/list', function (req, res, next) {
     if (conectado) {
+        user=cogeLogin(req.session);
+        console.log(req.session);
+        console.log(user);
         res.render('list', {
-            title: 'API Rest Mongo'
+            title: 'API Rest Mongo',
+            usuario:user
         });
     } else {
         res.render('errorDB', {
@@ -251,5 +259,137 @@ router.post('/add', function (req, res, next) {
     }
 
 });
+router.get('/registerForm', function (req, res, next) {
+    if (conectado) {
+        res.render('register', {
+            title: 'API Rest Mongo'
+        });
+    } else {
+        res.render('errorDB', {
+            title: 'Mongo No arrancado'
+        });
+    }
 
+});
+
+router.post('/register', function (req, res, next) {
+    if (conectado) {
+        console.log(req.body);
+        var usuario = new User({
+            username: req.body.nombre,
+            hash: req.body.pass
+        });
+        usuario.save(function (err, userdevuelto) {
+            if (err) {
+                return console.error(err);
+            } else {
+                console.log("usuario guardado");
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(userdevuelto));
+            }
+        });
+    } else {
+        res.render('errorDB', {
+            title: 'Mongo No arrancado'
+        });
+    }
+
+});
+router.get('/loginForm', function (req, res, next) {
+    if (conectado) {
+        res.render('login', {
+            title: 'API Rest Mongo'
+        });
+    } else {
+        res.render('errorDB', {
+            title: 'Mongo No arrancado'
+        });
+    }
+
+});
+
+router.post('/login', function (req, res, next) {
+    if (conectado) {
+        console.log(req.body);
+        var usuario = new User({
+            username: req.body.nombre,
+            hash: req.body.pass
+        });
+        var objeto = {
+
+        };
+        objeto.username = usuario.username;
+        User.findOne(
+            objeto,
+            function (err, user) {
+                if (err) return console.error(err);
+                //console.log(user);
+                if(user!=null && user.hash==usuario.hash){
+                    //login correcto
+                    res.setHeader('Content-Type', 'application/json');
+                    //guardo el objeto en sesión
+                    var session=req.session;
+                    session.usuario=user;
+                    //TODO Corregir que no se envie la contraseña
+                    delete user.hash;
+                    console.log(user);
+                    res.send(JSON.stringify(user));
+                }else{
+                    //login incorrecto
+                    res.render('errorDB', {
+                        title: 'Login incorrecto'
+                    });
+                } 
+            }
+        );
+        /*
+        usuario.save(function (err, userdevuelto) {
+            if (err) {
+                return console.error(err);
+            } else {
+                console.log("usuario guardado");
+                res.setHeader('Content-Type', 'application/json');
+                res.send(JSON.stringify(userdevuelto));
+            }
+        });
+        */
+    } else {
+        res.render('errorDB', {
+            title: 'Mongo No arrancado'
+        });
+    }
+
+});
+router.get('/loginCheck', function (req, res, next) {
+    if (conectado) {
+        var session=req.session;
+        res.setHeader('Content-Type', 'application/json');
+        if(session.usuario){
+            res.send(JSON.stringify({login:true}));
+        }else{
+            res.send(JSON.stringify({login:false}));
+        }
+    } else {
+        res.render('errorDB', {
+            title: 'Mongo No arrancado'
+        });
+    }
+
+});
+router.get('/logout', function (req, res, next) {
+    if (conectado) {
+        var session=req.session;
+        delete session.usuario;
+        res.render('logout', {
+            title: 'Mongo No arrancado',
+            session:session
+        });
+        
+    } else {
+        res.render('errorDB', {
+            title: 'Mongo No arrancado'
+        });
+    }
+
+});
 module.exports = router;
