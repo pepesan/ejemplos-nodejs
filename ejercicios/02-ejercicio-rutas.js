@@ -10,6 +10,12 @@
 var express=require("express");
 var app=express();
 
+
+//lanzamiento del servidor
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
+});
+
 7.- Crea una nueva ruta accesible desde la url /miget con el método get. Haz que saque un mensaje por consola y devuelva por la respuesta "<h1>miGET</h1>"
 
 app.get("/miget",function(req,res){

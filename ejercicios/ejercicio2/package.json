@@ -1,0 +1,14 @@
+{
+  "name": "ejercicio2",
+  "version": "1.0.0",
+  "description": "resolucion de ejercicio2",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Vaquero <pepesan@gmail.com>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
