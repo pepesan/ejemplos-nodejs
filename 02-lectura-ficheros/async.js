@@ -18,11 +18,14 @@ var manejadoraServidor = function(req, res) {
     };
 
 var manejadoraFichero = function(err, info){
-    const server = http.createServer(manejadoraServidor);
     html=info;
-    server.listen(port, hostname, () => {
-      console.log(`Server running at http://${hostname}:${port}/`);
-    });
+    const server = http.createServer(manejadoraServidor);
+    server.listen(port, hostname, 
+        //function () {
+        () => {
+            console.log(`Server running at http://${hostname}:${port}/`);
+        }
+    );
 };
 
 fs.readFile("./index.html",manejadoraFichero);

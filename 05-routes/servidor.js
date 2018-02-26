@@ -1,8 +1,9 @@
-function inicializar (route) {
+function init (route) {
     var server = require('http').createServer();
-    var url = require('url');
+    var ModuloUrl = require('url');
     function control(petic, resp) {
-        var pathName = url.parse(petic.url).pathname;
+        var urlProcesada = ModuloUrl.parse(petic.url);
+        var pathName = urlProcesada.pathname;
         console.log('Petición recibida'); //Texto que saldrá por consola
         route(pathName);
         resp.writeHead(200, {'content-type': 'text/plain'});
@@ -10,6 +11,6 @@ function inicializar (route) {
         resp.end();
     }
     server.on('request', control).listen(8080);
-    console.log('Servidor inicializado');
+    console.log('Servidor inicializado: http://localhost:8080/');
 }
-exports.inicializar = inicializar; //Exportamos la función
+exports.inicializar = init; //Exportamos la función

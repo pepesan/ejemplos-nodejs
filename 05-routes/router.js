@@ -1,4 +1,4 @@
-function route (pathName) {
-console.log("Nueva petición recibida: " + pathName);
+function imprimeRuta (pathName) {
+    console.log("Nueva petición recibida: " + pathName);
 }
-exports.route = route;
+exports.route = imprimeRuta;

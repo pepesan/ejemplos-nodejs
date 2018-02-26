@@ -2,7 +2,8 @@ var express = require('express');
 var app=express();
 
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  res.send('http://localhost:3000/  !');
+    res.end();
 });
 
 app.post('/', function (req, res) {
@@ -113,7 +114,7 @@ app.route('/book')
     res.send('Update the book');
   });
 //parámetro por URL
-app.get('/:id', function(req, res){
+app.get('/book/:id', function(req, res){
     res.send('The id you specified is ' + req.params.id);
 });
 //parámetros por URL
