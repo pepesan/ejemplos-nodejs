@@ -117,6 +117,7 @@ app.route('/book')
 app.get('/book/:id', function(req, res){
     res.send('The id you specified is ' + req.params.id);
 });
+
 //parámetros por URL
 app.get('/thins/:name/:id', function(req, res) {
     res.send('id: ' + req.params.id + ' and name: ' + req.params.name);
@@ -127,8 +128,29 @@ app.get('/users/:userId/books/:bookId', function (req, res) {
   // Access bookId via: req.params.bookId
   res.send(req.params)
 });
+//para parámetros pasados por URL /search?text=criterio_de_busqueda
+app.get("/search",function(req,res){
+    var criterio=req.query.text;
+    res.send(req.query);
+});
 
+//Cookies: res.cookies
+app.get("/cookies",function (req,res){
+    //Array de cookies
+   console.log(req.cookies); 
+});
 
+//Mandar cookies
+app.get("/sendCookies",function (req,res){
+    //Manda una cookie
+    res.cookie("Clave","Valor",{domain:"localhost"});
+    res.send("cookie mandada!");
+});
+
+//Redirección
+app.get("/redirect",function (req,res){
+    res.redirect(302,"/cookies");
+});
 //Utilice la clase express.Router para crear manejadores de rutas montables y modulares.
 //llama al fichero birds.js
 var birds = require('./birds');
