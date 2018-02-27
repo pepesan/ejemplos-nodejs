@@ -46,9 +46,9 @@ app.get('/ab(cd)?e', function(req, res) {
  res.send('ab(cd)?e');
 });
 
-//Esta vía de acceso de ruta coincidirá con cualquier valor con una “a” en el nombre de la ruta.
-app.get(/g/, function(req, res) {
-  res.send('/g/');
+//Esta vía de acceso de ruta coincidirá con cualquier valor con una “w” en el nombre de la ruta.
+app.get(/w/, function(req, res) {
+  res.send('/w/');
 });
 
 //Esta vía de acceso de ruta coincidirá con butterfly y dragonfly, pero no con butterflyman, dragonfly man, etc.
@@ -126,11 +126,21 @@ app.get('/thins/:name/:id', function(req, res) {
 app.get('/users/:userId/books/:bookId', function (req, res) {
   // Access userId via: req.params.userId
   // Access bookId via: req.params.bookId
+    console.log(req.params.length);
   res.send(req.params)
 });
-//para parámetros pasados por URL /search?text=criterio_de_busqueda
+/*
+//para parámetros pasados por URL 
+//URL:   /search?text=criterio_de_busqueda
+segundo parámetro &oq=cursosdedesarrollo
+
+dos  parametros ?p1=12&p2=16
+p1=12
+p2=16
+*/
 app.get("/search",function(req,res){
     var criterio=req.query.text;
+    //console.log(criterio);
     res.send(req.query);
 });
 
