@@ -138,22 +138,41 @@ dos  parametros ?p1=12&p2=16
 p1=12
 p2=16
 */
+
+
+
 app.get("/search",function(req,res){
     var criterio=req.query.text;
     //console.log(criterio);
     res.send(req.query);
 });
 
+
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 //Cookies: res.cookies
 app.get("/cookies",function (req,res){
     //Array de cookies
-   console.log(req.cookies); 
+    if(req.cookies!=undefined){
+        console.log(req.cookies);      
+        res.send(req.cookies);
+    }else{
+        res.send("No has mandado cookies");
+    }
+   
 });
 
 //Mandar cookies
 app.get("/sendCookies",function (req,res){
     //Manda una cookie
-    res.cookie("Clave","Valor",{domain:"localhost"});
+    var fecha_expiracion=new Date(2028, 02, 28);
+    res.cookie("Clave3","Valor",
+        {
+            domain:"localhost",
+            path:"/",
+            expires:fecha_expiracion
+        });
     res.send("cookie mandada!");
 });
 
@@ -165,7 +184,7 @@ app.get("/redirect",function (req,res){
 //llama al fichero birds.js
 var birds = require('./birds');
 //lo asigna a una ruta
-app.use('/birds', birds);
+app.use('/pajaro', birds);
 
 
 //lanzamiento del servidor
