@@ -7,9 +7,11 @@ router.use(function timeLog(req, res, next) {
   next();
 });
 // define the home page route
-router.get('/home', function(req, res) {
-  res.send('Birds home page');
-});
+router.get('/home', 
+    function(req, res) {
+        res.send('Birds home page');
+    }
+);
 // define the about route
 router.get('/about', function(req, res) {
   res.send('About birds');
