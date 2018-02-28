@@ -1,8 +1,14 @@
+//Dependencia principal
 var express = require('express');
+//módulo de node https://nodejs.org/api/path.html
 var path = require('path');
+//módulo que maneja el favicon https://www.npmjs.com/package/serve-favicon
 var favicon = require('serve-favicon');
+//Módulo que maneja el log https://www.npmjs.com/package/morgan
 var logger = require('morgan');
+//módulo que pone a funcionar req.cookies
 var cookieParser = require('cookie-parser');
+//módulo que permite req.body (datos de formulario/post)
 var bodyParser = require('body-parser');
 
 //Set up mongoose connection
@@ -15,7 +21,7 @@ mongoose.connect(mongoDB, {
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-
+//configuración de rutas
 var index = require('./routes/index');
 var users = require('./routes/users');
 var books = require('./routes/books');
@@ -33,6 +39,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+//uso de ficheros estáticos a partir de una ruta
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
