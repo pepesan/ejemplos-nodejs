@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  include includes/menu.pug
+  div 
+    div(id="mensajes")
+    form(class="needs-validation",method="post",action="",id="formu-edit",novalidate)
+        input(id="iden",name="iden",type="hidden",value=item._id)
+        div(class="form-group")
+            label(for="nombre") nombre
+            input(class="form-control",id="nombre",name="nombre",type="text",value=item.username,required)
+            div(class="valid-feedback") Correcto!
+            div(class="invalid-feedback") Incorrecto!
+        div(class="form-group")
+            label(for="pass") password
+            input(class="form-control",id="pass",name="pass",type="password",value=item.hash,required)
+            div(class="valid-feedback") Correcto!
+            div(class="invalid-feedback") Incorrecto!
+        div(class="form-group")
+            input(class="form-control btn btn-primary",type="submit",value="Enviar")

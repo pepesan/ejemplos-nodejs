@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  include includes/menu.pug
+  div(class="container")
+    div(class="row")
+        div(class="col-12")
+            h1 Listado de llamadas Ajax
+            ul
+                li
+                    a(href="/api/getAll") getAll (AJAX,GET) devuelve un array de objetos JSON de tipo User
+                li
+                    a(href="/api/addStatic") addStatic (AJAX,GET) Añade un objeto predefinido y lo devuelve en JSON
+                li
+                    a(href="/api/add") add (AJAX,POST) cuando se envían los datos de un User(nombre,pass) añade el objeto y lo devuelve en formato JSON
+                li
+                    a(href="/api/get/id") get/:id (AJAX,GET) se pasa un parámetro el ID del usuario y devuelve un objeto JSON con los datos del Usuario
+                li
+                    a(href="/api/edit/id") edit/:id (AJAX,POST) se pasa un parámetro el ID del usuario, se mandan los datos a modificar del usuario (nombre,pass) y devuelve un objeto JSON con los datos del Usuario modificado
+                li
+                    a(href="/api/delete/id") delete/:id (AJAX,GET) se pasa un parámetro el ID del usuario y devuelve un objeto JSON con los datos del Usuario borrado
+                li
+                    a(href="/api/register") register (AJAX,POST) se pasan los datos de un usuario (nombre,pass) y devuelve el objeto del usuario en JSON guardado en la BBDD
+                li
+                    a(href="/api/login") login (AJAX,POST) se pasan los datos de un usuario (nombre,pass) y devuelve el objeto del usuario en JSON
+                li
+                    a(href="/api/loginCheck") Login Check (AJAX,GET) Devuelve un objeto en JSON que dice si estás logueado 
+                

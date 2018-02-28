@@ -1,0 +1,14 @@
+nav(class="navbar navbar-expand-lg navbar-light bg-light")
+    a(class="navbar-brand",href="/") Home
+    button( class="navbar-toggler", type="button" ,data-toggle="collapse", data-target="#navbarNavAltMarkup", aria-controls="navbarNavAltMarkup", aria-expanded="false", aria-label="Toggle navigation")
+        span(class="navbar-toggler-icon")
+    div(class="collapse navbar-collapse", id="navbarNavAltMarkup")
+        div(class="navbar-nav")
+            a(class="nav-item nav-link active",href="/api") Usuario CRUD
+            a(class="nav-item nav-link",href="/api/list") Listado
+            a(class="nav-item nav-link",href="/api/addForm") Añadir Usuario
+            if (!usuario)
+                a(class="nav-item nav-link",href="/api/loginForm") Login Form
+                a(class="nav-item nav-link",href="/api/registerForm") Register Form
+            if (usuario)
+                a(class="nav-item nav-link",href="/api/logout") Logout
