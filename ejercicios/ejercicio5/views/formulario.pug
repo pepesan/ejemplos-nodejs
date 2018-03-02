@@ -3,6 +3,7 @@ extends layout
 block content
   //"<h1>"+title+"</h1>";
   h1 Formulario de login
+  div(id="mensajes")
   form(id="login",action="/api/login",method="post")
     div
         label(for="usuario") Nombre de Usuario
@@ -12,5 +13,5 @@ block content
         input(type="password",id="password",name="password",value="", placeholder="contraseña")
     div
         input(type="submit",id="submit",name="submit",value="Enviar")
-  div(id="mensajes")
+  
     
