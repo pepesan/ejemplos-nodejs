@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h1 Upload Form
+  form(id="upload",action="/uploadFile",method="post",enctype="multipart/form-data")
+    input(id="fichero",type="file",name="filetoupload",multiple="multiple")
+    input(id="submit",name="submit",type="submit",value="enviar")

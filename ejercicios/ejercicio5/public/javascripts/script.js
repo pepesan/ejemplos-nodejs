@@ -1,3 +1,6 @@
+import $ from 'jquery';
+
+
 function pideCosas(){
     $.getJSON(
         "http://localhost:3000/api/", 

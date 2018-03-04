@@ -11,7 +11,7 @@ db.once('open', function () {
     conectado = true;
 
 });
-
+var formidable = require('formidable');
 
 function cogeLogin(session){
     return session.usuario;
@@ -391,5 +391,21 @@ router.get('/logout', function (req, res, next) {
         });
     }
 
+});
+router.post("/uploadFileForm",function(req,res){
+    res.render("upload");
+});
+router.post("/uploadFile",function(req,res){
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+      var oldpath = files.filetoupload.path;
+      var newpath = '/Applications/XAMPP/htdocs/ejemplos-nodejs/17-rest-mvc-api-mongo/public/videos/' + files.filetoupload.name;
+      fs.rename(oldpath, newpath, function (err) {
+        if (err) throw err;
+        res.write('File uploaded and moved!');
+        res.end();
+      });
+    }
+    );
 });
 module.exports = router;

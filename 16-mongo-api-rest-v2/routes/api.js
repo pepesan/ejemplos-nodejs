@@ -11,7 +11,8 @@ db.once('open', function () {
     conectado = true;
 
 });
-
+var formidable = require('formidable');
+var fs = require('fs');
 
 function cogeLogin(session){
     return session.usuario;
@@ -391,5 +392,24 @@ router.get('/logout', function (req, res, next) {
         });
     }
 
+});
+router.get("/uploadFileForm",function(req,res){
+    console.log("presentando Formulario");
+    res.render("upload", {
+        title: 'Subir Fichero'
+    });
+});
+router.post("/uploadFile",function(req,res){
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+      var oldpath = files.filetoupload.path;
+      var newpath = __dirname+'/../public/uploads/' + files.filetoupload.name;
+      fs.rename(oldpath, newpath, function (err) {
+        if (err) throw err;
+        res.write('File uploaded and moved!');
+        res.end();
+      });
+    }
+    );
 });
 module.exports = router;
