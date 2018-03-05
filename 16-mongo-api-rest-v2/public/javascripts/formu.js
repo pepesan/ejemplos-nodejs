@@ -17,10 +17,13 @@ function enviado(event){
     };
     objeto.nombre=$("#nombre").val();
     objeto.pass=$("#pass").val();
-    $.post("/api/add",objeto,recoger)
+    $.post(
+        "/api/add",
+        objeto,
+        recoger)
         .fail(function(){
         console.log("petición fallida");
-    })
+    });
 }
 function editado(event){
     event.preventDefault();

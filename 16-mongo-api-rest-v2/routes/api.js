@@ -63,6 +63,7 @@ router.get('/get/:id', function (req, res, next) {
         };
         objeto._id = req.params.id;
         User.findOne(
+            //{_id:req.params.id}
             objeto,
             function (err, usuario) {
                 if (err) return console.error(err);
@@ -220,6 +221,7 @@ router.get('/addStatic', function (req, res, next) {
     if (conectado) {
         var usuario = new User({
             username: "pepesan"
+            //, otro_campo:"otro valor"
         });
         usuario.save(function (err, userdevuelto) {
             if (err) {
@@ -244,6 +246,7 @@ router.post('/add', function (req, res, next) {
             username: req.body.nombre,
             hash: req.body.pass
         });
+        usuario.setPassword(req.body.pass);
         usuario.save(function (err, userdevuelto) {
             if (err) {
                 return console.error(err);
@@ -325,7 +328,7 @@ router.post('/login', function (req, res, next) {
             function (err, user) {
                 if (err) return console.error(err);
                 //console.log(user);
-                if(user!=null && user.hash==usuario.hash){
+                if(user!=null && user.validPassword(usuario.hash)){
                     //login correcto
                     res.setHeader('Content-Type', 'application/json');
                     //guardo el objeto en sesión

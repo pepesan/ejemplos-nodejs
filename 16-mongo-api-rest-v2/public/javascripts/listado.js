@@ -6,7 +6,9 @@ function gestionaRespuesta(datos){
 }
 function init(){
     console.log("DOM Cargado");
-    if($("#listado")){
+    var listado=$("body").has("#tabla");
+    //console.log(listado);
+    if(listado.length){
         $.getJSON("getAll",gestionaRespuesta)
         .fail(function(){
             console.log("error");
