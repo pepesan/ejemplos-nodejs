@@ -14,6 +14,19 @@ db.once('open', function () {
 var formidable = require('formidable');
 var fs = require('fs');
 
+router.use(function(req,res,next){
+    if(conectado){
+        var session=req.session;
+        next();
+    }else{
+        res.render('errorDB', {
+            title: 'Mongo No arrancado',
+            message: 'Mongo No arrancado',
+            error:"No se ha podido conectar a la BBDD"
+        });
+    }
+});
+
 function cogeLogin(session){
     return session.usuario;
 }
@@ -57,7 +70,6 @@ router.get('/list', function (req, res, next) {
 });
 router.get('/get/:id', function (req, res, next) {
     //console.log(req.params.id);
-    if (conectado) {
         var objeto = {
 
         };
@@ -68,15 +80,18 @@ router.get('/get/:id', function (req, res, next) {
             function (err, usuario) {
                 if (err) return console.error(err);
                 //console.log(users);
+                
                 res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(usuario));
+                if(usuario.username==req.session.usuario.username){
+                    res.send(JSON.stringify(usuario));    
+                }else{
+                    var error={error:"No son tus datos"};
+                    res.send(JSON.stringify(error));    
+                }
+                
             }
         );
-    } else {
-        res.render('errorDB', {
-            title: 'Mongo No arrancado'
-        });
-    }
+
 
 });
 router.get('/edita/:id', function (req, res, next) {
@@ -109,7 +124,11 @@ router.post('/edit/:id', function (req, res, next) {
         var objetoModificado = {};
         objetoModificado._id = req.params.id;
         objetoModificado.username = req.body.nombre;
-        objetoModificado.hash = req.body.pass;
+        if(req.body.pass){
+            objetoModificado.hash = req.body.pass;  
+            objetoModificado.salt = crypto.randomBytes(16).toString('hex');
+            objetoModificado.hash = crypto.pbkdf2Sync(objetoModificado.hash, objetoModificado.salt, 10000, 512, 'sha512').toString('hex');
+        }
         console.log(objetoModificado);
         User.findByIdAndUpdate(
             req.params.id,
@@ -148,7 +167,8 @@ router.get('/borra/:id', function (req, res, next) {
                 if (err) return console.error(err);
                 //console.log(users);
                 res.render('borra', {
-                    item: usuario
+                    item: usuario,
+                    title:"Borrar usuario?"
                 });
             }
         );
@@ -281,8 +301,8 @@ router.post('/register', function (req, res, next) {
         console.log(req.body);
         var usuario = new User({
             username: req.body.nombre,
-            hash: req.body.pass
         });
+        usuario.setPassword(req.body.pass);
         usuario.save(function (err, userdevuelto) {
             if (err) {
                 return console.error(err);
@@ -314,7 +334,7 @@ router.get('/loginForm', function (req, res, next) {
 
 router.post('/login', function (req, res, next) {
     if (conectado) {
-        console.log(req.body);
+        //console.log(req.body);
         var usuario = new User({
             username: req.body.nombre,
             hash: req.body.pass
@@ -335,7 +355,8 @@ router.post('/login', function (req, res, next) {
                     var session=req.session;
                     session.usuario=user;
                     //TODO Corregir que no se envie la contraseña
-                    delete user.hash;
+                    user.hash="";
+                    user.salt="";
                     console.log(user);
                     res.send(JSON.stringify(user));
                 }else{
@@ -368,10 +389,16 @@ router.get('/loginCheck', function (req, res, next) {
     if (conectado) {
         var session=req.session;
         res.setHeader('Content-Type', 'application/json');
+        var objetoDevuelto={
+            login:true,
+            
+        };
         if(session.usuario){
-            res.send(JSON.stringify({login:true}));
+            objetoDevuelto.usuario=session.usuario;
+            res.send(JSON.stringify(objetoDevuelto));
         }else{
-            res.send(JSON.stringify({login:false}));
+            objetoDevuelto.login=false;
+            res.send(JSON.stringify(objetoDevuelto));
         }
     } else {
         res.render('errorDB', {

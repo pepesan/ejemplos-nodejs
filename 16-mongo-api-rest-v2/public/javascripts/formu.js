@@ -30,7 +30,9 @@ function editado(event){
     var objeto={    
     };
     objeto.nombre=$("#nombre").val();
-    objeto.pass=$("#pass").val();
+    if($("#pass").val()!=""){
+        objeto.pass=$("#pass").val();
+    }
     objeto._id=$("#iden").val();
     $.post("/api/edit/"+objeto._id,objeto,recogerEdit)
         .fail(function(){

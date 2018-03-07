@@ -1,11 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  
   include includes/menu.pug
   div(id="mensajes")
   div
-    h1 #{item.username}
-    h2 #{item.hash}
+    h1= title
+    h2 Usuario: #{item.username}
     button(class="btn btn-danger",id="borrar",data-id=item._id) Borrar Definitivamente (No habrá marcha atrás!!!!!)
