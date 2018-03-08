@@ -13,7 +13,7 @@ db.once('open', function () {
 });
 var formidable = require('formidable');
 var fs = require('fs');
-
+/*
 router.use(function(req,res,next){
     if(conectado){
         var session=req.session;
@@ -26,7 +26,7 @@ router.use(function(req,res,next){
         });
     }
 });
-
+*/
 function cogeLogin(session){
     return session.usuario;
 }
@@ -442,4 +442,16 @@ router.post("/uploadFile",function(req,res){
     }
     );
 });
+router.get('/views', function(req, res, next) {
+  if (req.session.views) {
+    req.session.views++;
+    res.setHeader('Content-Type', 'text/html')
+    res.write('<p>views: ' + req.session.views + '</p>')
+    res.write('<p>expires in: ' + (req.session.cookie.maxAge / 1000) + 's</p>')
+    res.end()
+  } else {
+    req.session.views = 1
+    res.end('welcome to the session demo. refresh!')
+  }
+})
 module.exports = router;
