@@ -442,6 +442,55 @@ router.post("/uploadFile",function(req,res){
     }
     );
 });
+router.get("/search/:query",function(req,res){
+    if (conectado) {
+        res.setHeader('Content-Type', 'application/json');
+        var query=req.params.query;
+
+        var objetoBusqueda={
+            
+        };
+        objetoBusqueda.username={ "$regex": query, "$options": "i" };
+        //console.log(objetoBusqueda);
+        User.find(objetoBusqueda).limit(10).exec(function (err, users) {
+            if (err) return console.error(err);
+            //console.log(users);
+            res.send(JSON.stringify(users));
+        });
+
+    } else {
+        res.render('errorDB', {
+            title: 'Mongo No arrancado'
+        });
+    }
+});
+router.get("/search/:query/pag/:pag",function(req,res){
+    if (conectado) {
+        res.setHeader('Content-Type', 'application/json');
+        var query=req.params.query;
+        var pag;
+        if(req.params.query!=undefined){
+            pag=req.params.query;
+        }else{
+            pag=0;
+        }
+        var objetoBusqueda={
+            
+        };
+        objetoBusqueda.username={ "$regex": query, "$options": "i" };
+        //console.log(objetoBusqueda);
+        User.find(objetoBusqueda).skip(pag*10).limit(10).exec(function (err, users) {
+            if (err) return console.error(err);
+            //console.log(users);
+            res.send(JSON.stringify(users));
+        });
+
+    } else {
+        res.render('errorDB', {
+            title: 'Mongo No arrancado'
+        });
+    }
+});
 router.get('/views', function(req, res, next) {
   if (req.session.views) {
     req.session.views++;
