@@ -52,6 +52,7 @@ router.get('/getAll', function (req, res, next) {
     }
 
 });
+
 router.get('/list', function (req, res, next) {
     if (conectado) {
         user=cogeLogin(req.session);
