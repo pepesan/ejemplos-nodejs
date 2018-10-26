@@ -33,22 +33,6 @@ sequelize.sync().then(
         });
     }
 );
-sequelize.sync().then(
-    function () {
-        User.findOne({username:'janedoe'}).then(function (data) {
-            console.log("FindByUsername:"+JSON.stringify(data));
-        });
-    }
-);
-
-sequelize.sync().then(
-    function () {
-        User.findOne({username:'janedoe'}).then(function (data) {
-            console.log("FindByUsername:"+JSON.stringify(data));
-        });
-    }
-);
-
 
 sequelize.sync().then(
     function () {
