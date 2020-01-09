@@ -1,7 +1,7 @@
 
 exports.mandaCookies=function (req,res){
         //Manda una cookie
-        var fecha_expiracion=new Date(2028, 02, 28);
+        var fecha_expiracion=new Date(2028, 2, 28);
         res.cookie("Clave3","Valor",
             {
                 domain:"localhost",
