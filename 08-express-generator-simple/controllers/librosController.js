@@ -67,6 +67,9 @@ var app = {
         res.end(JSON.stringify(object));
 
     },
+    vista: function(req, res, next) {
+        res.render('vista', { title: 'vista' });
+    }
 };
 
 module.exports = app;
