@@ -1,5 +1,3 @@
-var formidable = require('formidable');
-
 var app = {
     listado: [],
     index: function(req, res) {
