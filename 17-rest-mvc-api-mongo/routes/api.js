@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://192.168.99.100/test');
+mongoose.connect('mongodb://localhost/test',{ useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 var conectado = false;
 var User = require("../models/user");
@@ -271,7 +271,6 @@ router.get('/registerForm', function (req, res, next) {
     }
 
 });
-
 router.post('/register', function (req, res, next) {
     if (conectado) {
         console.log(req.body);
@@ -307,7 +306,6 @@ router.get('/loginForm', function (req, res, next) {
     }
 
 });
-
 router.post('/login', function (req, res, next) {
     if (conectado) {
         console.log(req.body);

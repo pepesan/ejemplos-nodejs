@@ -12,7 +12,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "formidable": "^1.1.1",
-    "mongoose": "^5.0.7",
+    "mongoose": "^5.8.6",
     "mongoose-unique-validator": "^2.0.0",
     "morgan": "~1.9.0",
     "pug": "2.0.0-beta11",

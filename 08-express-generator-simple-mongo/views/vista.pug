@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  script(src="/javascripts/jquery-3.4.1.min.js")
+  script(src="/javascripts/librosAjax.js")
+  button(id="recarga") Recarga
+  ul(id="resultados")
