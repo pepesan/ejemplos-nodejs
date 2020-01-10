@@ -1,6 +1,5 @@
 var Libro = require("../models/libro");
 var app = {
-    listado: [],
     index: function(req, res) {
         // TODO esto tendría que venir de la BBDD
         res.setHeader('Content-Type', 'application/json');
@@ -83,7 +82,25 @@ var app = {
     },
     vista: function(req, res, next) {
         res.render('vista', { title: 'vista' });
-    }
+    },
+    search: function(req, res) {
+        console.log(req.query);
+        res.setHeader('Content-Type', 'application/json');
+        var query =Libro.find({});
+        if(req.query.page && parseInt(req.query.page) >=1){
+            query.skip(req.query.page*req.query.num);
+        }
+        if(req.query.num && parseInt(req.query.num) >=1){
+            query.limit(parseInt(req.query.num));
+        }else{
+            query.limit(10);
+        }
+        query.exec(function (err, users) {
+            if (err) return console.error(err);
+            //console.log(users);
+            res.send(JSON.stringify(users));
+        });
+    },
 };
 
 module.exports = app;

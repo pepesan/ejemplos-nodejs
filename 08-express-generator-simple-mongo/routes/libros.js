@@ -19,6 +19,7 @@ router.get('/vista-ajax',librosController.vista);
 /* GET home page. */
 router.get('/', librosController.index);
 router.post('/', librosController.add);
+router.get('/search', librosController.search);
 router.get('/:id', librosController.show);
 router.put('/:id', librosController.edit);
 router.delete('/:id', librosController.delete);
