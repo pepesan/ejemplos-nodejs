@@ -4,6 +4,10 @@ var http = require('http');
 var app = express();
 //var fs = require('fs') ;
 var User = require('./models/user') ;
+var Padre = require('./models/padres') ;
+var Person = require('./models/person') ;
+var Story = require('./models/story') ;
+
 
 // database connection
 var mongoose = require('mongoose');
@@ -16,10 +20,68 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 
 var bodyParser = require('body-parser');
-// create application/json parser 
+// create application/json parser
 var jsonParser = bodyParser.json();
-// parse application/json 
+// parse application/json
 app.use(bodyParser.json());
+
+app.get("/person",function(req,res){
+
+  const author = new Person({
+  _id: new mongoose.Types.ObjectId(),
+  name: 'Ian Fleming',
+  age: 50
+});
+
+author.save(function (err) {
+  if (err) return handleError(err);
+
+  const story1 = new Story({
+    title: 'Casino Royale',
+    author: author._id    // assign the _id from the person
+  });
+
+  story1.save(function (err) {
+    if (err) return handleError(err);
+    console.log('Author saved successfully!');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({author: author, story: story1}));
+    res.end();
+  });
+  });
+});
+
+app.get('/show', function(req, res) {
+  Story.
+  findOne({ title: 'Casino Royale' }).
+  populate('author').
+  exec(function (err, story) {
+    if (err) return handleError(err);
+    console.log('The author is %s', story.author.name);
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({story: story, name: story.author.name}));
+    res.end();
+  });
+});
+
+app.get("/demo",function(req,res){
+
+  const parent = new Padre({ children: [{ name: 'Matt' }, { name: 'Sarah' }] })
+  parent.children[0].name = 'Matthew';
+
+  // `parent.children[0].save()` is a no-op, it triggers middleware but
+  // does **not** actually save the subdocument. You need to save the parent
+  // doc.
+  parent.save(function(err) {
+    if (err) throw err;
+
+    console.log('Padre saved successfully!');
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(parent));
+    res.end();
+  });
+
+});
 
 app.get('/import', function(req, res) {
     // create a new user called chris
@@ -82,7 +144,7 @@ app.get("/:id",function(req,res){
         console.log(user);
         res.end(user.toString());
     });
-    
+
 });
 app.post("/:id",function(req,res){
     var id=req.params.id;
@@ -102,9 +164,9 @@ app.post("/:id",function(req,res){
             res.end(user.toString());
         });
         console.log(user);
-       
+
     });
-    
+
 });
 app.delete("/:id",function(req,res){
     var id=req.params.id;
@@ -112,7 +174,7 @@ app.delete("/:id",function(req,res){
     User.findById(id,function(err,user){
         if (err) throw err;
         // show the one user
-        
+
         user.remove(function(err) {
             if (err) throw err;
 
@@ -120,10 +182,12 @@ app.delete("/:id",function(req,res){
             res.end(user.toString());
         });
         console.log(user);
-       
+
     });
-    
+
 });
+
+
 // dynamically include routes (Controller)
 /*
 fs.readdirSync('./controllers').forEach(function (file) {

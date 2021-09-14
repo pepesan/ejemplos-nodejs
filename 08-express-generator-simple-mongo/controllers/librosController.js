@@ -14,7 +14,8 @@ var app = {
         console.log(req.body);
         var libro = new Libro({
             titulo: req.body.titulo,
-            autor: req.body.autor
+            autor: req.body.autor,
+            isbn: req.body.isbn,
         });
         libro.save(function (err, librodevuelto) {
             if (err) {
@@ -35,9 +36,17 @@ var app = {
         Libro.findOne(
             objeto,
             function (err, libro) {
-                if (err) return console.error(err);
-                //console.log(users);
                 res.setHeader('Content-Type', 'application/json');
+                if (err || libro==null) {
+                  //return console.error(err);
+                  res.send(JSON.stringify({
+                    'error': true,
+                    'code' : '404',
+                    'message':'Objeto no encontrado',
+                  }));
+                }
+                //console.log(users);
+
                 res.send(JSON.stringify(libro));
             }
         );
@@ -48,12 +57,20 @@ var app = {
         objetoModificado._id = req.params.id;
         objetoModificado.titulo = req.body.titulo;
         objetoModificado.autor = req.body.autor;
+        objetoModificado.isbn = req.body.isbn;
         console.log(objetoModificado);
         Libro.findByIdAndUpdate(
             req.params.id,
             objetoModificado,
             function (err, libro) {
-                if (err) return console.error(err);
+                if (err || libro==null) {
+                  //return console.error(err);
+                  res.send(JSON.stringify({
+                    'error': true,
+                    'code' : '404',
+                    'message':'Objeto no encontrado',
+                  }));
+                }
                 console.log(libro);
                 Libro.findById(
                     req.params.id,
@@ -71,7 +88,14 @@ var app = {
         Libro.findByIdAndRemove(
             req.params.id,
             function (err, libro) {
-                if (err) return console.error(err);
+                if (err || libro==null) {
+                  //return console.error(err);
+                  res.send(JSON.stringify({
+                    'error': true,
+                    'code' : '404',
+                    'message':'Objeto no encontrado',
+                  }));
+                }
                 //console.log(users);
                 //FALTA BORRAR
                 res.setHeader('Content-Type', 'application/json');
