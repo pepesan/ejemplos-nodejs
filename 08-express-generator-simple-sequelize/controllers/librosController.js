@@ -22,7 +22,7 @@ var app = {
     add: function(req, res) {
         // TODO: validar el body
         console.log(req.body);
-        objeto = new Libro(3,req.body.titulo, req.body.autor);
+        objeto = new Libro({id: 3, titulo:req.body.titulo, autor:req.body.autor});
         // TODO meter en la BBDD el objeto
         // devolver el objeto en JSON
         res.setHeader('Content-Type', 'application/json');
@@ -32,10 +32,13 @@ var app = {
         // Recojo el id por url
         var iden=req.params.id;
         // TODO obtener de la BBDD el objeto por su ID
-        var object= new Libro(
-            iden,
-            'Guardias!!! Guardias???',
-            "Terry Pratchett");
+        Libro.findAll({
+          where: {
+            id: iden
+          }
+        }).then(function (data){
+
+        });
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(object));
 

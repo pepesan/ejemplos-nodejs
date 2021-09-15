@@ -1,6 +1,9 @@
 var Sequelize = require('sequelize');
 
-var sequelize = new Sequelize('test', 'root', 'root');
+var sequelize = new Sequelize('test', 'root', 'root',{
+    host: 'localhost',
+    dialect: 'mysql'
+});
 
 var User = sequelize.define('user', {
   username: Sequelize.STRING,
