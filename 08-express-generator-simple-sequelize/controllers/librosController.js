@@ -22,11 +22,15 @@ var app = {
     add: function(req, res) {
         // TODO: validar el body
         console.log(req.body);
-        objeto = new Libro({id: 3, titulo:req.body.titulo, autor:req.body.autor});
-        // TODO meter en la BBDD el objeto
-        // devolver el objeto en JSON
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(objeto));
+        Libro.create({
+          titulo: req.body.titulo,
+          autor: req.body.autor
+        }).then(function (data) {
+            console.log("Create:"+JSON.stringify(data));
+            res.setHeader('Content-Type', 'application/json');
+            res.send( JSON.stringify(data));
+            res.end();
+        });
     },
     show : function (req, res) {
         // Recojo el id por url
@@ -37,39 +41,56 @@ var app = {
             id: iden
           }
         }).then(function (data){
-
+          console.log("FindAllById:"+JSON.stringify(data));
+          res.setHeader('Content-Type', 'application/json');
+          res.send( JSON.stringify(data[0]));
+          res.end();
         });
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(object));
 
     },
     edit : function (req, res) {
         // Recojo el id por url
         var iden=req.params.id;
-        // TODO: validar el body
-        console.log(req.body);
-        // TODO obtener de la BBDD el objeto por su ID
-        var object = new Libro(
-            iden,
-            req.body.titulo,
-            req.body.autor
-        );
-        // TODO Hacer la modificación en la BBDD
-        // devuelves los datos modificados
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(object));
+        Libro.update({ // datos a modificar
+          titulo: req.body.titulo,
+          autor: req.body.autor
+        },
+        { // condición a aplicar
+          where: {
+            id: iden
+          }
+        }).then(function (data){
+          Libro.findAll({
+            where: {
+              id: iden
+            }
+          }).then(function (data){
+            console.log("FindAllById:"+JSON.stringify(data));
+            res.setHeader('Content-Type', 'application/json');
+            res.send( JSON.stringify(data[0]));
+            res.end();
+          });
+        });
     },
     delete : function (req, res) {
         // Recojo el id por url
         var iden=req.params.id;
-        // TODO borrar de la BBDD el objeto por su ID
-        var object = new Libro(
-            iden,
-            'Guardias!!! Guardias???',
-            "Terry Pratchett"
-        );
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify(object));
+        Libro.findAll({
+          where: {
+            id: iden
+          }
+        }).then(function (data){
+          Libro.destroy({
+            where: {
+              id: iden
+            }
+          }).then(function (data2){
+            console.log("FindAllById:"+JSON.stringify(data));
+            res.setHeader('Content-Type', 'application/json');
+            res.send( JSON.stringify(data));
+            res.end();
+          });
+        });
 
     },
     vista: function(req, res, next) {
