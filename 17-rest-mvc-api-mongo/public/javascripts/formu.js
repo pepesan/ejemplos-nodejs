@@ -1,10 +1,19 @@
 function presentaAlerta(mensaje){
     $("#mensajes").html(mensaje);
 }
-function recoger(datos){
+function pausecomp(millis)
+{
+    var date = new Date();
+    var curDate = null;
+    do { curDate = new Date(); }
+    while(curDate-date < millis);
+}
+function recoger(datos, mensaje){
     console.log(datos);
     //window.history.back();
-    presentaAlerta("<div class='alert alert-success'><strong>Success!</strong> Item saved!!!.</div>");
+    presentaAlerta(mensaje);
+    pausecomp(2000);
+    window.location.replace("http://localhost:3000/api/list");
 }
 function recogerEdit(datos){
     console.log(datos);
@@ -13,18 +22,18 @@ function recogerEdit(datos){
 }
 function enviado(event){
     event.preventDefault();
-    var objeto={    
+    var objeto={
     };
     objeto.nombre=$("#nombre").val();
     objeto.pass=$("#pass").val();
-    $.post("/api/add",objeto,recoger)
+    $.post("/api/add",objeto,recoger(objeto, "<div class='alert alert-success'><strong>Success!</strong> Item saved!!!.</div>"))
         .fail(function(){
         console.log("petición fallida");
     })
 }
 function editado(event){
     event.preventDefault();
-    var objeto={    
+    var objeto={
     };
     objeto.nombre=$("#nombre").val();
     objeto.pass=$("#pass").val();
@@ -49,23 +58,26 @@ function checkSamePassword() {
 
 function registrar(event){
     event.preventDefault();
-    var objeto={    
+    var objeto={
     };
     objeto.nombre=$("#nombre").val();
     objeto.pass=$("#pass").val();
-    $.post("/api/register",objeto,recoger)
+    $.post("/api/register",objeto,recoger(objeto, "<div class='alert alert-success'><strong>Success!</strong> Item saved!!!.</div>"))
         .fail(function(){
         console.log("petición fallida");
     })
 }
 function loguear(event){
     event.preventDefault();
-    var objeto={    
+    var objeto={
     };
     objeto.nombre=$("#nombre").val();
     objeto.pass=$("#pass").val();
-    $.post("/api/login",objeto,recoger)
-        .fail(function(){
+    $.post(
+      "/api/login",
+      objeto,
+      recoger(objeto,"<div class='alert alert-success'><strong>Success!</strong> Correct Login!!!.</div>")
+    ).fail(function(){
         console.log("petición fallida");
     })
 }
@@ -95,6 +107,6 @@ $(document).ready(init);
   'use strict';
   window.addEventListener('load', function() {
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    
+
   }, false);
 })();

@@ -337,7 +337,7 @@ router.post('/login', function (req, res, next) {
                     res.render('errorDB', {
                         title: 'Login incorrecto'
                     });
-                } 
+                }
             }
         );
         /*
@@ -382,7 +382,7 @@ router.get('/logout', function (req, res, next) {
             title: 'Mongo No arrancado',
             session:session
         });
-        
+
     } else {
         res.render('errorDB', {
             title: 'Mongo No arrancado'
@@ -405,5 +405,9 @@ router.post("/uploadFile",function(req,res){
       });
     }
     );
+});
+
+router.get("/sesiones",function(req,res){
+    res.send(JSON.stringify(req.session));
 });
 module.exports = router;
