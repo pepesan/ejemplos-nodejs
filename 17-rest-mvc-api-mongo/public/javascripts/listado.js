@@ -1,8 +1,8 @@
 function gestionaRespuesta(datos){
     $.each(datos,function(i,item){
-        $("#tabla tbody").append("<tr scope='row'><td class=''><a href='/api/show/"
+        $("#tabla tbody").append("<tr scope='row'><td class=''><a href='/api/show2/"
         +item._id+"'>"+item.username
-        +" (show/id)</a><br/><a href='/api/get/"
+        +" (show2/id)</a><br/><a href='/api/get/"
         +item._id+"'>(get/id)</a></td><td class='text-center'><a href='/api/show/"
         +item._id+"' class='btn btn-primary'>Show</a><a href='/api/edita/"
         +item._id+"' class='btn btn-warning'>Edit</a><a href='/api/borra/"

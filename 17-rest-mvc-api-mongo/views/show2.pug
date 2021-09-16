@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  include includes/menu.pug
+  div
+    h1(id="show-title", data-id=id)
+    h2 ""
+    a(class="btn btn-warning",id="modificar",href="/api/edita/"+id) Editar
+    a(class="btn btn-danger",id="borrar",href="/api/borra/"+id) Borrar
+    a(class="btn btn-primary",id="borrar",href="/api/list"+id) Volver

@@ -202,6 +202,23 @@ router.get('/show/:id', function (req, res, next) {
     }
 
 });
+router.get('/show2/:id', function (req, res, next) {
+    console.log(req.params.id);
+    if (conectado) {
+        var objeto = {
+
+        };
+        objeto._id = req.params.id;
+        res.render('show2', {
+          id: req.params.id
+        });
+    } else {
+        res.render('errorDB', {
+            title: 'Mongo No arrancado'
+        });
+    }
+
+});
 router.get('/addForm', function (req, res, next) {
     if (conectado) {
         res.render('form', {
