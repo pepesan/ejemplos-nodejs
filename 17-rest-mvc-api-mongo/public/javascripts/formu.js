@@ -26,8 +26,12 @@ function enviado(event){
     };
     objeto.nombre=$("#nombre").val();
     objeto.pass=$("#pass").val();
-    $.post("/api/add",objeto,recoger(objeto, "<div class='alert alert-success'><strong>Success!</strong> Item saved!!!.</div>"))
-        .fail(function(){
+    $.post(
+      "/api/add", // url
+      objeto, // datos
+      // success
+      recoger(objeto, "<div class='alert alert-success'><strong>Success!</strong> Item saved!!!.</div>")
+    ).fail(function(){
         console.log("petición fallida");
     })
 }
