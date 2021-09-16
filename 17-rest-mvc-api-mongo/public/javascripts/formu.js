@@ -12,8 +12,8 @@ function recoger(datos, mensaje){
     console.log(datos);
     //window.history.back();
     presentaAlerta(mensaje);
-    pausecomp(2000);
-    window.location.replace("http://localhost:3000/api/list");
+    //pausecomp(2000);
+    //window.location.replace("http://localhost:3000/api/list");
 }
 function recogerEdit(datos){
     console.log(datos);
@@ -26,6 +26,7 @@ function enviado(event){
     };
     objeto.nombre=$("#nombre").val();
     objeto.pass=$("#pass").val();
+
     $.post(
       "/api/add", // url
       objeto, // datos
@@ -33,7 +34,8 @@ function enviado(event){
       recoger(objeto, "<div class='alert alert-success'><strong>Success!</strong> Item saved!!!.</div>")
     ).fail(function(){
         console.log("petición fallida");
-    })
+    });
+
 }
 function editado(event){
     event.preventDefault();
