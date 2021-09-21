@@ -15,7 +15,7 @@ var UserSchema = new mongoose.Schema({
     image: String,
     hash: String,
     salt: String,
-    
+
 }, {timestamps: true,collection:"user"});
 
 UserSchema.methods.setPassword = function(password){

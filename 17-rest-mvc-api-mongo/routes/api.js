@@ -414,7 +414,8 @@ router.post("/uploadFile",function(req,res){
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
       var oldpath = files.filetoupload.path;
-      var newpath = '/Applications/XAMPP/htdocs/ejemplos-nodejs/17-rest-mvc-api-mongo/public/videos/' + files.filetoupload.name;
+      var newpath = '/Applications/XAMPP/htdocs/ejemplos-nodejs/17-rest-mvc-api-mongo/public/videos/'
+      + files.filetoupload.name;
       fs.rename(oldpath, newpath, function (err) {
         if (err) throw err;
         res.write('File uploaded and moved!');

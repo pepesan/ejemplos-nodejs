@@ -1,3 +1,4 @@
+
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
@@ -36,6 +37,16 @@ router.get('/', function (req, res, next) {
         title: 'API Rest Mongo'
     });
 });
+/**
+ * @swagger
+ * /api/getAll:
+ *   get:
+ *     description: Get all Users
+ *     responses:
+ *       200:
+ *         description: Success
+ *
+ */
 router.get('/getAll', function (req, res, next) {
     if (conectado) {
         res.setHeader('Content-Type', 'application/json');
@@ -69,6 +80,27 @@ router.get('/list', function (req, res, next) {
     }
 
 });
+
+/**
+ * @swagger
+ * /get/:id:
+ *   get:
+ *     description: Get By id
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         type: String
+ *         description: identificativo de usuario
+ *     responses:
+ *       200:
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/definitions/User'
+ *
+ */
 router.get('/get/:id', function (req, res, next) {
     //console.log(req.params.id);
         var objeto = {
@@ -81,15 +113,15 @@ router.get('/get/:id', function (req, res, next) {
             function (err, usuario) {
                 if (err) return console.error(err);
                 //console.log(users);
-                
+
                 res.setHeader('Content-Type', 'application/json');
                 if(usuario.username==req.session.usuario.username){
-                    res.send(JSON.stringify(usuario));    
+                    res.send(JSON.stringify(usuario));
                 }else{
                     var error={error:"No son tus datos"};
-                    res.send(JSON.stringify(error));    
+                    res.send(JSON.stringify(error));
                 }
-                
+
             }
         );
 
@@ -126,7 +158,7 @@ router.post('/edit/:id', function (req, res, next) {
         objetoModificado._id = req.params.id;
         objetoModificado.username = req.body.nombre;
         if(req.body.pass){
-            objetoModificado.hash = req.body.pass;  
+            objetoModificado.hash = req.body.pass;
             objetoModificado.salt = crypto.randomBytes(16).toString('hex');
             objetoModificado.hash = crypto.pbkdf2Sync(objetoModificado.hash, objetoModificado.salt, 10000, 512, 'sha512').toString('hex');
         }
@@ -365,7 +397,7 @@ router.post('/login', function (req, res, next) {
                     res.render('errorDB', {
                         title: 'Login incorrecto'
                     });
-                } 
+                }
             }
         );
         /*
@@ -392,7 +424,7 @@ router.get('/loginCheck', function (req, res, next) {
         res.setHeader('Content-Type', 'application/json');
         var objetoDevuelto={
             login:true,
-            
+
         };
         if(session.usuario){
             objetoDevuelto.usuario=session.usuario;
@@ -416,7 +448,7 @@ router.get('/logout', function (req, res, next) {
             title: 'Mongo No arrancado',
             session:session
         });
-        
+
     } else {
         res.render('errorDB', {
             title: 'Mongo No arrancado'
@@ -449,7 +481,7 @@ router.get("/search/:query",function(req,res){
         var query=req.params.query;
 
         var objetoBusqueda={
-            
+
         };
         objetoBusqueda.username={ "$regex": query, "$options": "i" };
         //console.log(objetoBusqueda);
@@ -476,7 +508,7 @@ router.get("/search/:query/pag/:pag",function(req,res){
             pag=0;
         }
         var objetoBusqueda={
-            
+
         };
         objetoBusqueda.username={ "$regex": query, "$options": "i" };
         //console.log(objetoBusqueda);
