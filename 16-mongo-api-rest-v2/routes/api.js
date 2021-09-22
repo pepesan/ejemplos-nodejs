@@ -2,7 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/test', { useNewUrlParser: true });
 var db = mongoose.connection;
 var conectado = false;
 var User = require("../models/user");
