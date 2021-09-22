@@ -23,6 +23,7 @@ describe('Página principal: ',()=>{
     it('GET /api/getAll coge usuarios', (done) => {
         chai.request(mainURL)
             .get('api/getAll')
+            .set('Accept', 'application/json')
             .end( function(err,res){
                 //console.log(res.body);
                 const body = res.body;
@@ -35,6 +36,9 @@ describe('Página principal: ',()=>{
                 expect(item.hash).to.be.an('String');
                 expect(item.createdAt).to.be.an('String');
                 expect(item.updatedAt).to.be.an('String');
+                expect(new Date(item.createdAt)).to.be.an("Date");
+                //console.log(new Date(p.createdAt));
+                expect(new Date(item.updatedAt)).to.be.an("Date");
                 done();
             });
     });
@@ -43,6 +47,7 @@ describe('Página principal: ',()=>{
     it('POST /api/add crea un usuario', (done) => {
         chai.request(mainURL)
             .post('api/add')
+            .set('Accept', 'application/json')
             .set('content-type', 'application/json')
             .send({
                 "nombre": "admin",
@@ -55,15 +60,17 @@ describe('Página principal: ',()=>{
                 expect(res.body).to.be.an('Object');
                 expect(res.body.username).to.be.an('String');
                 expect(res.body.username).to.equal("admin");
+                expect(res.body.username).to.be.an('String');
+                expect(res.body.hash).to.equal("admin123");
                 id = res.body._id;
                 expect(new Date(res.body.createdAt)).to.be.an("Date");
+                expect(new Date(res.body.updatedAt)).to.be.an("Date");
                 done();
             });
     });
-    it('get /api/get/:id muestra un usuario', (done) => {
+    it('Get /api/get/:id muestra un usuario por ID', (done) => {
         chai.request(mainURL)
             .get('api/get/'+id)
-            .set('content-type', 'application/json')
             .set('Accept', 'application/json')
             .end( function(err,res){
                 // console.log(res.body);
@@ -78,10 +85,11 @@ describe('Página principal: ',()=>{
                 done();
             });
     });
-    it('POST /api/edit/:id modifica un usuario', (done) => {
+    it('POST /api/edit/:id modifica un usuario por ID', (done) => {
         chai.request(mainURL)
             .post('api/edit/'+id)
             .set('content-type', 'application/json')
+            .set('Accept', 'application/json')
             .send({
                 "nombre": "admin2",
                 "pass": "admin1232"
@@ -95,13 +103,13 @@ describe('Página principal: ',()=>{
                 expect(res.body.username).to.equal("admin2");
                 expect(res.body.hash).to.equal("admin1232");
                 expect(new Date(res.body.createdAt)).to.be.an("Date");
+                expect(new Date(res.body.updatedAt)).to.be.an("Date");
                 done();
             });
     });
-    it('get /api/delete/:id muestra un usuario', (done) => {
+    it('get /api/delete/:id borra un usuario por ID', (done) => {
         chai.request(mainURL)
             .get('api/delete/'+id)
-            .set('content-type', 'application/json')
             .set('Accept', 'application/json')
             .end( function(err,res){
                 // console.log(res.body);
@@ -112,6 +120,7 @@ describe('Página principal: ',()=>{
                 //const item = res.body;
                 expect(res.body.username).to.be.an('String');
                 expect(new Date(res.body.createdAt)).to.be.an("Date");
+                expect(new Date(res.body.updatedAt)).to.be.an("Date");
                 done();
             });
     });
