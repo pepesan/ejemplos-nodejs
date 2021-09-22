@@ -7,7 +7,8 @@
     "dev": "nodemon ./bin/www",
     "test": "mocha",
     "test-guapo": "mocha --reporter mochawesome",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cucumber": "cucumber-js"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
@@ -16,7 +17,6 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "formidable": "^1.1.1",
-    "mochawesome": "^6.2.2",
     "mongoose": "^5.8.6",
     "mongoose-unique-validator": "^2.0.0",
     "morgan": "~1.9.0",
@@ -24,8 +24,11 @@
     "serve-favicon": "^2.4.5"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^7.3.1",
     "chai": "^4.3.4",
     "chai-http": "^4.3.0",
-    "mocha": "^9.1.1"
+    "mocha": "^9.1.1",
+    "mochawesome": "^6.2.2",
+    "selenium-webdriver": "^4.0.0-rc-1"
   }
 }
