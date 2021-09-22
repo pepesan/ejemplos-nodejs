@@ -6,7 +6,8 @@
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
     "test": "mocha",
-    "test-guapo": "mocha --reporter mochawesome"
+    "test-guapo": "mocha --reporter mochawesome",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
