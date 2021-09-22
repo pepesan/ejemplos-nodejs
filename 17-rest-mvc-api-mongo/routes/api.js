@@ -14,7 +14,11 @@ db.once('open', function () {
 var formidable = require('formidable');
 
 function cogeLogin(session){
-    return session.usuario;
+    if (session.usuario){
+        return session.usuario;
+    }
+    return null;
+
 }
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -425,7 +429,13 @@ router.post("/uploadFile",function(req,res){
     );
 });
 
-router.get("/sesiones",function(req,res){
+router.get("/sesiones",function(req,res) {
     res.send(JSON.stringify(req.session));
+});
+
+router.get('/privado',function (req,res){
+    //var login = cogeLogin();
+    console.log(session);
+    res.render("privado");
 });
 module.exports = router;
