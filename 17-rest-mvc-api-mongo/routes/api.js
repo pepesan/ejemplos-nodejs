@@ -428,11 +428,10 @@ router.post("/uploadFile",function(req,res){
     }
     );
 });
-<<<<<<< Updated upstream
 
 router.get("/sesiones",function(req,res) {
     res.send(JSON.stringify(req.session));
-}
+});
 
 router.get('/privado',function (req,res){
     //var login = cogeLogin();
