@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "node --no-deprecation ./bin/www",
     "dev": "nodemon ./bin/www",
     "test": "mocha",
     "test-guapo": "mocha --reporter mochawesome",
