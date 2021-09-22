@@ -4,6 +4,7 @@
   "description": "\"Code to accompany the Sequelize CRUD 101 blog post\"",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "author": "Loren Stewart",
