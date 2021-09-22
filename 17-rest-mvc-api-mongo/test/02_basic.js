@@ -4,6 +4,7 @@ const assert = require("assert");
 chai.use(chaiHttp);
 const expect = require('chai').expect;
 var mainURL= "http://localhost:3000/";
+var id= "";
 describe('Página principal: ',()=>{
     it('GET / Devuelve un código 200', (done) => {
         // Código de la prueba
@@ -37,22 +38,81 @@ describe('Página principal: ',()=>{
                 done();
             });
     });
-    /*
-    it('POST /users crea un usuario', (done) => {
+
+
+    it('POST /api/add crea un usuario', (done) => {
         chai.request(mainURL)
-            .post('/users')
+            .post('api/add')
+            .set('content-type', 'application/json')
             .send({
-                "groups": [],
-                "username": "admin",
-                "password": "admin123"
+                "nombre": "admin",
+                "pass": "admin123"
             })
             .end( function(err,res){
-                console.log(res.body);
-                expect(res).to.have.status(200);
+                //console.log(res.body);
                 // comprobaciones
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('Object');
+                expect(res.body.username).to.be.an('String');
+                expect(res.body.username).to.equal("admin");
+                id = res.body._id;
+                expect(new Date(res.body.createdAt)).to.be.an("Date");
                 done();
             });
     });
-
-     */
+    it('get /api/get/:id muestra un usuario', (done) => {
+        chai.request(mainURL)
+            .get('api/get/'+id)
+            .set('content-type', 'application/json')
+            .set('Accept', 'application/json')
+            .end( function(err,res){
+                // console.log(res.body);
+                // comprobaciones
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('Object');
+                //const item = res.body;
+                expect(res.body.username).to.be.an('String');
+                expect(res.body._id).to.equal(id);
+                expect(new Date(res.body.createdAt)).to.be.an("Date");
+                const item = res.body;
+                done();
+            });
+    });
+    it('POST /api/edit/:id modifica un usuario', (done) => {
+        chai.request(mainURL)
+            .post('api/edit/'+id)
+            .set('content-type', 'application/json')
+            .send({
+                "nombre": "admin2",
+                "pass": "admin1232"
+            })
+            .end( function(err,res){
+                //console.log(res.body);
+                // comprobaciones
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('Object');
+                expect(res.body.username).to.be.an('String');
+                expect(res.body.username).to.equal("admin2");
+                expect(res.body.hash).to.equal("admin1232");
+                expect(new Date(res.body.createdAt)).to.be.an("Date");
+                done();
+            });
+    });
+    it('get /api/delete/:id muestra un usuario', (done) => {
+        chai.request(mainURL)
+            .get('api/delete/'+id)
+            .set('content-type', 'application/json')
+            .set('Accept', 'application/json')
+            .end( function(err,res){
+                // console.log(res.body);
+                // comprobaciones
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('Object');
+                expect(res.body._id).to.equal(id);
+                //const item = res.body;
+                expect(res.body.username).to.be.an('String');
+                expect(new Date(res.body.createdAt)).to.be.an("Date");
+                done();
+            });
+    });
 });
