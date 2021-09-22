@@ -1,5 +1,5 @@
 //const expect = require('chai').expect;
-
+var id;
 describe('My First Test', () => {
     it('Does not do much!', () => {
         expect(true).to.equal(true)
@@ -24,16 +24,16 @@ describe('My First Test', () => {
         cy.get('@currentUsers').should((response) => {
             console.log(response);
             expect(response[0]).to.have.property('_id')
-            expect(response[0]).to.have.property('_id',"614b2938d92b305b5c192228")
+            //expect(response[0]).to.have.property('_id',"614b2938d92b305b5c192228")
             //expect(response).to.have.status(200)
             //expect(response).to.have.property('headers')
             //expect(response).to.have.property('duration')
         })
     })
-    /*
+
     it('request post /api/add', () => {
         cy.request('POST', 'api/add', {
-            name: 'admin',
+            nombre: 'admin',
             pass: 'admin123'
         })
         .its('body')
@@ -42,13 +42,57 @@ describe('My First Test', () => {
             console.log(response);
             expect(response).to.have.property('_id')
             expect(response).to.have.property('username','admin')
+            id = response._id;
+            //expect(response).to.have.status(200)
+            //expect(response).to.have.property('headers')
+            //expect(response).to.have.property('duration')
+        })
+    })
+    it('request get /api/get/:id', () => {
+        cy.request('GET', 'api/get/'+ id)
+            .its('body')
+            .as('currentUser')
+        cy.get('@currentUser').should((response) => {
+            console.log(response);
+            expect(response).to.have.property('_id')
+            expect(response).to.have.property('username', "admin")
+            //expect(response[0]).to.have.property('_id',"614b2938d92b305b5c192228")
+            //expect(response).to.have.status(200)
+            //expect(response).to.have.property('headers')
+            //expect(response).to.have.property('duration')
+        })
+    })
+    it('request post /api/edit/:id', () => {
+        cy.request('POST', 'api/edit/'+ id,{
+            nombre: 'admin2',
+            pass: 'admin12312'
+        })
+            .its('body')
+            .as('currentUser')
+        cy.get('@currentUser').should((response) => {
+            console.log(response);
+            expect(response).to.have.property('_id')
+            expect(response).to.have.property('username', "admin2")
+            //expect(response[0]).to.have.property('_id',"614b2938d92b305b5c192228")
+            //expect(response).to.have.status(200)
+            //expect(response).to.have.property('headers')
+            //expect(response).to.have.property('duration')
+        })
+    })
+    it('request get /api/delete/:id', () => {
+        cy.request('GET', 'api/delete/'+ id)
+            .its('body')
+            .as('currentUser')
+        cy.get('@currentUser').should((response) => {
+            console.log(response);
+            expect(response).to.have.property('_id')
+            expect(response).to.have.property('username', "admin2")
+            //expect(response[0]).to.have.property('_id',"614b2938d92b305b5c192228")
             //expect(response).to.have.status(200)
             //expect(response).to.have.property('headers')
             //expect(response).to.have.property('duration')
         })
     })
 
-
-     */
 
 })
