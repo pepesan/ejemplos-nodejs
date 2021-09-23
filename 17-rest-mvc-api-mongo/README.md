@@ -9,10 +9,13 @@ npm run test-guapo
 
 Los informes están en ./mochawesome-report
 ## Instalación de dependencias de Cypress
+Si tienes linux:
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+
+## Instalación de dependencias
 npm install -D cypress
 npm install -g cypress
-### ejecución de Cypress
+### Ejecución de Cypress
 cypress open
 
 ## Selenium driver
