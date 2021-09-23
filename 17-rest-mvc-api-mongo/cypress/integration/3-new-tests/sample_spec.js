@@ -25,7 +25,7 @@ describe('My First Test', () => {
         cy.get('@currentUsers').should((response) => {
             console.log(response);
             expect(response[0]).to.have.property('_id')
-            //expect(response[0]).to.have.property('_id',"614b2938d92b305b5c192228")
+            expect(response[0]).to.have.property('_id',"614341b036020a04940d3267")
             //expect(response).to.have.status(200)
             //expect(response).to.have.property('headers')
             //expect(response).to.have.property('duration')
@@ -43,6 +43,7 @@ describe('My First Test', () => {
             console.log(response);
             expect(response).to.have.property('_id')
             expect(response).to.have.property('username','admin')
+            expect(response).to.have.property('hash','admin123')
             id = response._id;
             //expect(response).to.have.status(200)
             //expect(response).to.have.property('headers')
@@ -56,6 +57,7 @@ describe('My First Test', () => {
         cy.get('@currentUser').should((response) => {
             console.log(response);
             expect(response).to.have.property('_id')
+            expect(response).to.have.property('_id', id)
             expect(response).to.have.property('username', "admin")
             //expect(response[0]).to.have.property('_id',"614b2938d92b305b5c192228")
             //expect(response).to.have.status(200)
@@ -73,7 +75,9 @@ describe('My First Test', () => {
         cy.get('@currentUser').should((response) => {
             console.log(response);
             expect(response).to.have.property('_id')
+            expect(response).to.have.property('_id',id)
             expect(response).to.have.property('username', "admin2")
+            expect(response).to.have.property('hash', "admin12312")
             //expect(response[0]).to.have.property('_id',"614b2938d92b305b5c192228")
             //expect(response).to.have.status(200)
             //expect(response).to.have.property('headers')
@@ -87,7 +91,9 @@ describe('My First Test', () => {
         cy.get('@currentUser').should((response) => {
             console.log(response);
             expect(response).to.have.property('_id')
+            expect(response).to.have.property('_id',id)
             expect(response).to.have.property('username', "admin2")
+            expect(response).to.have.property('hash', "admin12312")
             //expect(response[0]).to.have.property('_id',"614b2938d92b305b5c192228")
             //expect(response).to.have.status(200)
             //expect(response).to.have.property('headers')

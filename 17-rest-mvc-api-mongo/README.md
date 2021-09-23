@@ -10,7 +10,8 @@ npm run test-guapo
 Los informes están en ./mochawesome-report
 ## Instalación de dependencias de Cypress
 apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-
+npm install -D cypress
+npm install -g cypress
 ### ejecución de Cypress
 cypress open
 
@@ -19,6 +20,21 @@ cypress open
 descargar el ejecutable para la versión de chrome que tengamos desde
 https://chromedriver.chromium.org/downloads
 
+npm install -D selenium-webdriver
+
 copiarlo a un directorio dentro del path
 ## Ejecución de cucumber
+npm install -D @cucumber/cucumber
+npm install -g @cucumber/cucumber
+
+Global: cucumber-js
+Local: ./node_modules/@cucumber/cucumber/bin/cucumber-js
+
+## Ejecución de Cucumber
+Local: node node_modules\@cucumber\cucumber\bin\cucumber-js
+Global: cucumber-js
+
+package.json
 npm run cucumber
+
+
