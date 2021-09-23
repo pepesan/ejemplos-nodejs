@@ -27,9 +27,6 @@ copiarlo a un directorio dentro del path
 npm install -D @cucumber/cucumber
 npm install -g @cucumber/cucumber
 
-Global: cucumber-js
-Local: ./node_modules/@cucumber/cucumber/bin/cucumber-js
-
 ## Ejecución de Cucumber
 Local: node node_modules\@cucumber\cucumber\bin\cucumber-js
 Global: cucumber-js
